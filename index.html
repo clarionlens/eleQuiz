@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이러닝운영관리사 필기 대비</title>
+  <meta name="description" content="AI가 생성하는 이러닝운영관리사 필기 오늘의 20문제">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <header class="app-header">
+    <div class="header-inner">
+      <span class="header-title">이러닝운영관리사 필기 대비</span>
+      <span class="header-sub">오늘의 20문제</span>
+    </div>
+  </header>
+
+  <!-- API 키 입력 화면 -->
+  <div id="screen-apikey" class="screen">
+    <div class="container">
+      <div class="apikey-box">
+        <div class="apikey-icon">🔑</div>
+        <h2 class="apikey-title">Gemini API 키 입력</h2>
+        <p class="apikey-desc">
+          문제 생성을 위해 Gemini API 키가 필요합니다.<br>
+          키는 이 기기에만 저장되며 외부로 전송되지 않습니다.
+        </p>
+        <div class="apikey-form">
+          <input
+            type="password"
+            id="apikey-input"
+            class="apikey-input"
+            placeholder="AIza..."
+            autocomplete="off"
+            onkeydown="if(event.key==='Enter') startWithKey()"
+          >
+          <button class="btn-start" onclick="startWithKey()">시작하기</button>
+        </div>
+        <p class="apikey-help">
+          API 키가 없다면
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">
+            Google AI Studio
+          </a>
+          에서 무료로 발급받을 수 있어요.
+        </p>
+        <p class="apikey-stored" id="apikey-stored" style="display:none">
+          저장된 키가 있어요.
+          <button class="btn-link" onclick="useStoredKey()">바로 시작</button>
+          또는
+          <button class="btn-link" onclick="clearStoredKey()">키 변경</button>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 로딩 화면 -->
+  <div id="screen-loading" class="screen">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <p class="loading-title">오늘의 문제를 생성하는 중...</p>
+      <p class="loading-desc">AI가 출제기준에 맞는 문제를 준비하고 있어요.<br>잠시만 기다려 주세요.</p>
+    </div>
+  </div>
+
+  <!-- 퀴즈 화면 -->
+  <div id="screen-quiz" class="screen">
+
+    <!-- 진행바 -->
+    <div class="progress-wrap">
+      <div class="progress-inner">
+        <div class="progress-label">
+          <span>오늘의 문제</span>
+          <span id="progress-text">0 / 20 문제 답변됨</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-bar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 문제 목록 -->
+    <div class="container">
+      <div id="quiz-list"></div>
+    </div>
+
+    <!-- 채점 버튼 -->
+    <div class="submit-area">
+      <div class="submit-inner">
+        <button class="btn-submit" id="submit-btn" onclick="submitQuiz()" disabled>
+          채점하기
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 결과 화면 -->
+  <div id="screen-result" class="screen">
+    <div class="container">
+
+      <!-- 점수 히어로 -->
+      <div class="result-hero">
+        <div class="score-display" id="score-display">–</div>
+        <div class="score-pct" id="score-pct">–</div>
+        <p class="score-comment" id="score-comment"></p>
+      </div>
+
+      <!-- 과목별 점수 -->
+      <p class="section-title">과목별 결과</p>
+      <div id="subject-scores"></div>
+
+      <!-- 문제 해설 -->
+      <p class="section-title" style="margin-top:24px;">문제 해설</p>
+      <div id="review-list"></div>
+
+      <!-- 다시 풀기 -->
+      <button class="btn-retry" onclick="retryQuiz()">
+        새 문제 20개 풀기
+      </button>
+
+    </div>
+  </div>
+
+  <!-- 에러 화면 -->
+  <div id="screen-error" class="screen">
+    <div class="container">
+      <div class="error-box">
+        <div class="error-icon">⚠️</div>
+        <p class="error-title">문제를 불러오지 못했어요</p>
+        <p class="error-msg" id="error-msg"></p>
+        <button class="btn-retry-sm" onclick="loadQuestions()">다시 시도</button>
+        <button class="btn-retry-sm btn-secondary" onclick="showApiKeyScreen()" style="margin-top:8px">API 키 변경</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="gemini.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
