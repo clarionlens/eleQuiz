@@ -6,7 +6,7 @@
  */
 
 // 배포 시 본인 Workers URL로 교체. 테스트 중에는 비워두세요.
-const WORKER_URL = "";
+const WORKER_URL = "https://elequiz.seonnie1908.workers.dev";
 
 const GEMINI_DIRECT_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent";
